@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "teleparty-websocket-lib": "github:watchparty-org/teleparty-WebSocket-lib"
+  }
+}
