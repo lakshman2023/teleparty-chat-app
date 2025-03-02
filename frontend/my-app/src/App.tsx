@@ -30,18 +30,18 @@ const App: React.FC = () => {
   useEffect(() => {
     const eventHandler: SocketEventHandler = {
       onConnectionReady: () => {
-        console.log("Connected to WebSocket");
+        //console.log("Connected to WebSocket");
         setIsConnected(true);
       },
 
       onClose: () => {
-        console.log("WebSocket disconnected");
+        //console.log("WebSocket disconnected");
         setIsConnected(false);
         setIsInSession(false);
       },
 
       onMessage: (msg: any) => {
-        console.log("Received message:", msg);
+        //console.log("Received message:", msg);
 
         if (msg.type === SocketMessageTypes.SEND_MESSAGE) {
           const chatMessage = msg?.data as SessionChatMessage;
@@ -52,11 +52,7 @@ const App: React.FC = () => {
           const typingData = msg?.data as TypingMessageData;
           setIsTyping(typingData.anyoneTyping);
         } 
- 
-        else if (msg.type === "messageList") {
-          const messageList = msg as MessageList;
-          setMessages(messageList.messages);
-        }
+
       },
     };
 
@@ -67,7 +63,7 @@ const App: React.FC = () => {
   const createRoom = async () => {
     if (client && nickname && !isInSession) {
       const newRoomId = await client.createChatRoom(nickname, "");
-      console.log(`Room Created: ${newRoomId}`);
+      //console.log(`Room Created: ${newRoomId}`);
       setRoomId(newRoomId);
       setIsInSession(true);
     }
@@ -75,8 +71,9 @@ const App: React.FC = () => {
 
   const joinRoom = async () => {
     if (client && roomId && nickname && !isInSession) {
-      console.log(`Joining Room: ${roomId} as ${nickname}`);
-      await client.joinChatRoom(nickname, roomId, "");
+      //console.log(`Joining Room: ${roomId} as ${nickname}`);
+      const messageList = await client.joinChatRoom(nickname, roomId, "");
+      setMessages(messageList.messages);
       setIsInSession(true);
     }
   };
